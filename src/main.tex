@@ -1,0 +1,49 @@
+
+\documentclass[12pt]{article}
+\usepackage{lmodern}
+\usepackage[margin=0.5in]{geometry}
+
+\title{PLCC Plugin for Intellij}
+\author{Mark Nash (mdn4993)}
+\date{October 2020}
+
+\begin{document}
+{\fontfamily{lmss}\selectfont
+\maketitle
+
+\begin{abstract}
+    PLCC\cite{plcc-paper} is a custom compiler compiler tool used to teach the Programing Language Concepts course at Rochester Institute of Technology.
+    Taking a course would be less stressful and give more time for students to learn concepts if students could fight less with the custom tool and just worry about their assignments.
+    Intellij is a popular IDE that exposes an SDK to develop extra functionality on it.
+    RIT students are farmilliar with this IDE since it is prefered for two pre-requisite classes.
+    The current development process for an assignment in the PLC class requires writing a file without syntax highlighting, then compiling the file, then running the generated compiler.
+    Syntactic and symantic errors could exist in the file and cause pain to debug.
+    The different ways to start a generated compiler could also be confusing.
+    The Intellij platform contains SDK functionality to ease these development cycle painpoints and more.
+\end{abstract}
+
+\section{Introduction}
+The current development process for using the tool is to first manually download it (if not using the RIT CS servers which has it pre-installed), then write a PLCC file containing the grammar rules, regexes for tokens, and extra java files for custom functionality, then run a command to generate the language interpreter, then run either a repl or an execution or a trace execution.
+These executions have different command names and it is difficult to remember which ones do what.
+Currently no formal effort has been done to make this process easier.
+Intellij has the functionality to automatically download files, so this is able to be done if a user wants PLCC to be downloaded on their home computer.
+Intellij also has the idea of a run configuration that is a graphical setup of what can esentially be boiled down to a command-line command.
+The creater of the plugin just defines what GUI functionality corresponds to what command/argument is ran.
+This can help to guide the user which commands to run by adding documentation to the GUI before a command is run.
+Intellij syntax highlighting can help users see syntax errors, and common semantic errors can be caught by additions to the AST Intellij provides.
+
+\section{Project Creation}
+Project creation consists of two main things: PLCC tool detection and the creation of a standard project file layout.
+When a user clicks File -> New Project, they should be presented with an option on the left that says PLCC.
+Clicking on PLCC will then let them click through a project creation wizard whose first step is finding the PLCC instalation.
+Clicking 'next' will let them pick a directory for the project to be located.
+Clicking finish will give them an empty project.
+
+\section{}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{plcc_bib}
+
+
+}
+\end{document}
