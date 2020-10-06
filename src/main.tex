@@ -39,7 +39,37 @@ Clicking on PLCC will then let them click through a project creation wizard whos
 Clicking 'next' will let them pick a directory for the project to be located.
 Clicking finish will give them an empty project.
 
-\section{}
+\section{Run Configurations}
+When a user has a PLCC project open they will be able to add a PLCC run configuration.
+In the configuration pane, there will be a combo box with the four commands that can be run on a generated parser.
+The tool will automatically compile the .plcc file into its java files so that a user does not forget to re-compile when they have made a change to the file.
+When run, a run configuration will execute the specified command on the integrated terminal.
+
+\section{Commenting Command}
+The Intellij platform lets a user highlight lines then press Ctrl + / which makes the lines be commented out.
+This takes less time than commenting a line one by one.
+The comment character in a .plcc file is \# which is an EOL comment.
+This character will be appended to each line highlighted when pressing Ctrl + / in a .plcc file.
+
+\section{Syntax Highlighting}
+It is helpful to see where syntax elements start and end while programing.
+When writing a .plcc file, syntax elements are highlighted in a different color with each color similarly corresponding to Java syntax elements.
+The specific color is not set in stone, but the color is a generic Intellij platform type color that will be able to change to match the IDE theme selected.
+If some syntax is not correct, the incorrect characters are underlined in a red squiggle letting the user know that the syntax is invalid.
+
+\section{References and Name Resolution}
+Sometimes it is nice to know where a syntax element is defined or used previously.
+When a user Ctrl + clicks on some syntax, if that element has usages, a list will pop up showing where specifically they are in the file.
+If the element is a usage, a Ctrl + click will move the cursor to its definition.
+This functionality is implemented for regex names/usages, and grammar element names/usages.
+
+\section{User Testing}
+This prototype plugin was given to three volunteers currently taking the PLCC course and they generally said that they (liked/disliked) the tool and they thought it was (helpful/unhelpful).
+The following elements of the plugin were enjoyed while the following elements could use a little work. The following elements were not useful.
+They also requested the following features.
+
+\section{Conclusion}
+Given our generally (positive/negative) results from user testing, it may be useful in the future to (continue adding features to this project like: /integrate the tool as it is now into the curriculum/Not continue development of the plugin because it was more of a pain than the previous way of using PLCC).
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{plcc_bib}
