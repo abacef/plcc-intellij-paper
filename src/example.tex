@@ -467,14 +467,32 @@ Keyword1; Keyword2; Keyword3
     These three REPL programs have different command names and it is difficult to remember which ones do what.
     Currently no formal effort has been done to make this process easier.
     Intellij has the functionality to automatically download files, so this is able to be done if a user wants PLCC to be downloaded on their home computer.
-    Intellij also has the idea of a run configuration that is a graphical setup of what can essentially be boiled down to a command-line command.
-    This can help to guide the user which commands to run by adding documentation to the GUI before a command is run.
     Intellij syntax highlighting can help users see syntax errors, and common semantic errors can be caught by additions to the AST Intellij provides.
+    Intellij also has the idea of a run configuration that is a graphical setup of one or a set of commands to be run.
+    This can help to guide the user which commands to run by adding documentation to the GUI before a command is run.
 
+\section{Background}\label{sec:background}
+Students at RIT would have been introduced to the Intellij IDE platform in the two class Computer Science introductory sequence, first in Python with the PyCharm IDE, then in Java with the Intellij IDEA IDE\@.
+Since these two classes are required for Programming Language Concepts, it would not be too difficult for a student to learn how to use another programming language by using standard features of the Intellij platform IDE\@.
 
-\section{Background}
-% this is one way of including  text
-\input{background.tex}	
+\section{Project Creation}\label{sec:project-creation}
+The idiom of creating a new project in Intellij is to specify all the meta details about coding in a class of languages to achieve a goal.
+In this case, our goal is to run an interpreter generated from a .plcc file with .i.java extension files.
+Before a .plcc file is compiled and a REPL run, both a PLCC compiler as well as a Java distribution must be installed on the user's computer.
+Because of this, when a user creates a new project, they must specify the path to these.
+When a user clicks File $\rightarrow$ New Project, they are presented with many different project types on the left side of the new pop-up displayed.
+For the project type that is selected, on the right side of the pop-up, there will be some sort of custom GUI so that the user interacts with it to set up the necessary items for the project.
+When the user clicks on a PLCC project, the left side contains two labeled combo boxes, one for the PLCC program location and one for the Java distribution.
+\subsection{PLCC Program Location}\label{subsec:plcc-program-location}
+The PLCC dropdown will have two default options, plus 0 or more other options based on how many PLCC programs are downloaded on a user's computer in designated places.
+The first default option is to download PLCC\@.
+When selected:
+\begin{enumerate}
+    \item A zip file of the source code of the most recent release of PLCC from its repository on Gitub is downloaded
+    \item If a folder named .plcc does not exist in the user's home directory, one is created
+    \item The zip file is extracted into the .plcc folder
+    \item
+\end{enumerate}
 
 \subsection{Subsection Heading Here}
 Doubtful it stood;
