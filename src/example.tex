@@ -460,8 +460,8 @@ Keyword1; Keyword2; Keyword3
 
 
 
-\section{Introduction}
-    PLCC\cite{plcc-paper} is a custom compiler compiler tool used to teach the Programing Language Concepts course at Rochester Institute of Technology.
+\section{Introduction}\label{sec:introduction}
+PLCC\cite{plcc-paper} is a custom compiler compiler tool used to teach the Programing Language Concepts course at Rochester Institute of Technology.
     Intellij is a popular IDE that exposes an SDK to develop extra functionality on it.
     The current development process for using the tool is to first manually download it (if not using the RIT CS servers which has it pre-installed), then to write a .plcc file containing the grammar rules, token type regular expressions, and extra java files for custom functionality, then run a command to generate the language interpreter, then run one of three REPL programs.
     These three REPL programs have different command names and it is difficult to remember which ones do what.
@@ -471,19 +471,30 @@ Keyword1; Keyword2; Keyword3
     Intellij also has the idea of a run configuration that is a graphical setup of one or a set of commands to be run.
     This can help to guide the user which commands to run by adding documentation to the GUI before a command is run.
 
+
 \section{Background}\label{sec:background}
 Students at RIT would have been introduced to the Intellij IDE platform in the two class Computer Science introductory sequence, first in Python with the PyCharm IDE, then in Java with the Intellij IDEA IDE\@.
 Since these two classes are required for Programming Language Concepts, it would not be too difficult for a student to learn how to use another programming language by using standard features of the Intellij platform IDE\@.
+
+\subsection{Intellij Platform SDK}\label{subsec:intellij-platform-sdk}
+The Intellij platform is a base IDE platform that lets plugin developers add functionality to the IDE in the form of \textit{extensions} and \textit{actions}.
+Extensions are predefined classes of behavior that the IDE supports building on top of, like a file type syntax highlighting or adding a run configuration.
+Actions are a way to trigger java code to run when a defined behavior happens, like clicking a UI element.
+Most of the following features use extensions.
+The only action used is creating a new PLCC file.
+
 
 \section{Project Creation}\label{sec:project-creation}
 The idiom of creating a new project in Intellij is to specify all the meta details about coding in a class of languages to achieve a goal.
 In this case, our goal is to run an interpreter generated from a .plcc file with .i.java extension files.
 Before a .plcc file is compiled and a REPL run, both a PLCC compiler as well as a Java distribution must be installed on the user's computer.
+This is because PLCC outputs the interpreter in the form of Java classes.
 Because of this, when a user creates a new project, they must specify the path to these.
 When a user clicks File $\rightarrow$ New Project, they are presented with many different project types on the left side of the new pop-up displayed.
 For the project type that is selected, on the right side of the pop-up, there will be some sort of custom GUI so that the user interacts with it to set up the necessary items for the project.
 When the user clicks on a PLCC project, the left side contains two labeled combo boxes, one for the PLCC program location and one for the Java distribution.
-\subsection{PLCC Program Location}\label{subsec:plcc-program-location}
+
+\subsection{PLCC Program Location Selection}\label{subsec:plcc-program-location}
 The PLCC dropdown will have two default options, plus 0 or more other options based on how many PLCC programs are downloaded on a user's computer in designated places.
 The first default option is to download PLCC\@.
 When selected:
@@ -491,22 +502,76 @@ When selected:
     \item A zip file of the source code of the most recent release of PLCC from its repository on Gitub is downloaded
     \item If a folder named .plcc does not exist in the user's home directory, one is created
     \item The zip file is extracted into the .plcc folder
-    \item
+    \item The extracted folder's src directory is where the root of the PLCC program is.
+    \item It is then added as a list element to the drop-down box
 \end{enumerate}
+The second default option is to find a PLCC installation on the user's computer.
+When clicked, a file picker will open up where the user is able to pick where the installation is located.
+If the selected path contains a src directory and has a file named plcc.py, it is a valid installation and is added to the drop-down list.
+The other options possible are autodetected installations.
+Before the drop-down list appears, the \$HOME/.plcc directory will be searched for valid installations as well as whatever directory the environment variable LIBPLCC holds.
+These are added to the drop-down list.
 
-\subsection{Subsection Heading Here}
-Doubtful it stood;
-As two spent swimmers, that do cling together
-And choke their art. The merciless Macdonwald--
-Worthy to be a rebel, for to that
+\subsection{JDK Installation}\label{subsec:jdk-installation}
+The JDK drop-down box will be populated with all the confirmed installations that Intellij has cached throughout the usage of the IDE. Any of these may be selected.
+The PLCC output is compatible with Java 7 or higher.
+
+\subsection{Generated Project File Structure}\label{subsec:generated-project-file-structure}
+After \textit{next} is selected and the user selects the directory and name of the project, they are presented with the editor and project file list.
+There will be a directory created under the project directory named \textit{plcc} which is where the user is expected to store the .plcc file(s) they create.
 
 
-\subsubsection{Subsubsection Heading Here}
-Doubtful it stood;
-As two spent swimmers, that do cling together
-And choke their art. The merciless Macdonwald--
-Worthy to be a rebel, for to that
+\section{New PLCC File Shortcut}\label{sec:new-plcc-file-shortcut}
+When a user is ready to develop a .plcc file, the creation is easy.
+They can either right click on the directory and click \textit{New $\rightarrow$ File $\rightarrow$ PLCC File} or \textit{Alt + Insert $\rightarrow$ PLCC File}.
+Then a text box will display for the user to type in the name of the file.
+When they click \textit{OK}, a new file with that name and the extension .plcc will be created in the highlighted directory.
+The file created will contain the basic syntactic framework of a PLCC file, but with comments where the code needs to go directing the user to insert said code there.
+We are not sure of the usefulness of this template rather than just giving an empty file.
+On one hand, users can be guided where to put what code, but on the other hand students will be looking at example code anyway so they could be able to figure out the syntax from those examples.
+Also, syntax error hints will help with users learning they syntax as well.
+If a user does not want the new PLCC file to have a template, and they know the PLCC file extension, they can just create a generic file using \textit{New $\rightarrow$ File} and specifying the name of the file with the extension .plcc.
+Every file ending with .plcc has a unique icon to the left of the title so it can be easily recognised.
 
+
+\section{.plcc File Syntax Highlighting}\label{sec:new-.plcc-file-syntax-highlighting}
+Any file with the extension .plcc in the project will have its syntax highlighted.
+
+\subsection{Syntax Recognising}\label{subsec:syntax-recognising}
+In order to highlight text in a file, a syntax recogniser needs to be created.
+A common way to do this in Intellij is to define a .flex file to tokenize a file, and a .bnf file to parse the file based on te token definitions from the .flex file.
+Intellij encourages using JFlex, a tool that generates a Java token parser from the .flex file.
+For the parser, Intellij compiles the grammar rules specified in the .bnf file into Java code as well.
+The tokenizer and parser are then linked up together to create the syntax recogniser.
+Intellij does not run the full syntax recogniser every time a file is changed, but uses some algorithm to keep new code highlighted efficiently.
+If the code in the file does not parse, Intellij will put a red underline under the incorrect character and tell the user the grammar rules and/or token types that were expected in the place of the character.
+
+\subsection{Coloring Token Types}\label{subsec:coloring-token-types}
+In order to make text different colors, an extension needs to be added to give each toke type a color.
+Token types can be assigned a certain color, or a color class that Intellij provides (like \textit{String Literal} or \textit{Identifier}) that will change with the UI theme.
+If other plugins use these classes for similar token types in their language, and a user has seen syntax in many languages in Intellij, it is easier for them to make out what a specific syntax element is and means.
+
+
+\section{Line Commenting}\label{sec:line-commenting}
+Intellij encourages the line comment keyboard shortcut to be \textit{Ctrl + /}.
+The PLCC language has only a line comment character, which is \textit{\#}
+If the cursor is on a line or one or more lines are highlighted, when \textit{Ctrl + /} is pressed, all those lines will have a \textit{\#} character prepended to them.
+
+
+\section{PLCC Run Configuration}\label{sec:plcc-run-configuration}
+A run configuration can be created specific to PLCC\@.
+Clicking on the Run Configuration drop-down box and selecting \textit{New Run Configuration} then selecting the \textit{+} in the top-left corner will display a run configuration type for PLCC\@.
+When selected, a run configuration window will open.
+A labeled text box with file picker exists to let the user pick their .plcc file they want to run.
+When selected, the run configuration  can be created by clicking \textit{OK}.
+When the run button is clicked with a PLCC run configuration selected, the Intellij \textit{Run} tab will open and start execution of converting the .plcc file into the Java interpreter program with the PLCC program specified at project creation time.
+The If the .plcc file correctly executed with the PLCC program, the Java files will be put in a folder labeled \textit{Java} in the same directory as the .plcc file ran.
+Since this \textit{Java} directory was marked as a sources root during project creation, Intellij will recognise these files as Java classes in the correct directory based on their nonexistent package declarations.
+If a user wants to run a Parse REPL or se the output of the generated interpreter parsed, they would create a simple Java run configuration and run the generated Parse class with the possible file.
+This process is the same for Rep and Scan.
+If a user wanted to see an AST representation of their language syntax, they would add an argument \textit{-t} to Rep.
+
+%------------------------------------------------------------------------------------
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
 % For figures, \caption should occur after the \includegraphics.
@@ -521,29 +586,32 @@ Worthy to be a rebel, for to that
 % displayed while in draft mode.
 %
 
-A image is shown in Figure~\ref{fig:myfigure}. 
-A citation\cite{IEEEexample:article_typical}.
+%A image is shown in Figure~\ref{fig:myfigure}.
+%A citation\cite{IEEEexample:article_typical}.
+%
+%\begin{figure}[!t]
+%    \centering
+%    \includegraphics[width=2.5in]{myfigure}
+%    % where an .eps filename suffix will be assumed under latex,
+%    % and a .pdf suffix will be assumed for pdflatex; or what has been declared
+%    % via \DeclareGraphicsExtensions.
+%    \caption{Simulation Results}
+%    \label{fig:myfigure}
+%\end{figure}
+%------------------------------------------------------------------------------------
 
-\begin{figure}[!t]
-\centering
-\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-\caption{Simulation Results}
-\label{fig:myfigure}
-\end{figure}
 
-
-In Listing~\ref{hw} a HelloWorld program is shown.
-
-\begin{lstlisting}[caption=writer.c., label=hw]
-int main() {
-  char * msg = "Hello World\n";
-  write(STDIN_FILENO, msg, strlen(msg));
-  exit(0);
-}
-\end{lstlisting}
+%------------------------------------------------------------------------------------
+%In Listing~\ref{hw} a HelloWorld program is shown.
+%
+%\begin{lstlisting}[caption=writer.c., label=hw]
+%int main() {
+%  char * msg = "Hello World\n";
+%  write(STDIN_FILENO, msg, strlen(msg));
+%  exit(0);
+%}
+%\end{lstlisting}
+%------------------------------------------------------------------------------------
 
 % Note that IEEE typically puts floats only at the top, even when this
 % results in a large percentage of a column being occupied by floats.
@@ -606,9 +674,17 @@ int main() {
 
 
 
-\section{Conclusion}
-The conclusion goes here.
+\section{Conclusion}\label{sec:conclusion}
+These extensions for the Intellij platform are nice but we hypothesize that learning how to use the IDE plugin along with the bugs the user may encounter, there is not a clear winner on the development simplicity and speed improvements compared to the command line way of using PLCC.
+More user research, plugin features as well as plugin development testing could tip the scales some day so that taking the class will be easier.
 
+\subsection{More Proposed Features}\label{subsec:more-proposed-features}
+\begin{enumerate}
+    \item A run configuration should consist of a user selecting a .plcc file as well as selecting Parse Scan or Rep so that generation, compilation and running happens all at once.
+    PLCC will not need to be run if the .plcc file was not changed.
+    \item Many context hints need to be implemented, for example reference highlighting, graying out unused grammar rules, autocompletion of grammar rules and token type definitions, goto .i.java file declaration for grammar rules and include statements, and more.
+    \item Syntax highlighting needs to be implemented for .i.java files and also for that syntax to be able to be inserted into the bottom section of a .plcc file.
+\end{enumerate}
 
 
 
@@ -616,10 +692,10 @@ The conclusion goes here.
 
 
 % use section* for acknowledgement
-\section*{Acknowledgment}
-
-
-The authors would like to thank...
+%\section*{Acknowledgment}
+%
+%
+%The authors would like to thank...
 
 
 
