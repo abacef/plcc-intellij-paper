@@ -464,28 +464,64 @@ mdn4993@cs.rit.edu}}
 PLCC\cite{plcc-paper} is a custom compiler compiler tool used to teach the Programing Language Concepts course at Rochester Institute of Technology.
 The current development process for using the tool is to first manually download it (if not using the RIT CS servers which has it pre-installed), then to write a .plcc file containing the grammar rules, token types regular expressions, and extra java files for custom functionality, then run a command to generate the language interpreter, then run one of three REPL programs.
 These three REPL programs have different command names and it is difficult to remember which ones do what.
-Currently no formal effort has been done to make this process easier.
-\par Intellij is a popular IDE that exposes an SDK to develop extra functionality on it.
+Currently no formal effort has been done to make this development process easier.
+The Intellij platform plugin for the PLCC tool and language aims to make this process easier.
+\par Intellij is an IDE platform of which many popular IDEs have been developed on top of.
+The platform exposes an SDK to develop extra functionality on it.
 Intellij has the functionality to automatically download files.
 This is able to be done if a user wants PLCC to be downloaded on their home computer.
-Intellij syntax highlighting can help users see syntax errors, and common semantic errors can be caught by additions to the AST Intellij provides.
+Intellij syntax highlight~ing can help users see syntax errors, and common semantic errors can be caught by additions to the AST Intellij provides.
 Intellij also has the idea of a run configuration that is a graphical setup of one or a set of commands to be run.
 This can help to guide the user which commands to run by adding documentation to the GUI before a command is run.
 
 
 \section{Background}\label{sec:background}
-Students at RIT would have been introduced to the Intellij IDE platform in the two Computer Science introductory sequence classes, first in Python with the PyCharm IDE, then in Java with the Intellij IDEA IDE\@.
+\subsection{Why an IDE}\label{subsec:why-an-ide}
+The current batch/bash files can only go so far in making things easier.
+They cannot help with autocompletion, syntax highlighting, code hints, and many other features.
+
+\subsection{Why Intellij}\label{subsec:why-intellij}
+Vim has syntax highlighting, but that is pretty much all it adds.
+Students at RIT most likely would have been introduced to the Intellij IDE platform in the two Computer Science introductory sequence classes, first in Python with the PyCharm IDE, then in Java with the Intellij IDEA IDE since most professors use them in those classes.
 Since these two classes are required for Programming Language Concepts, it would not be too difficult for a student to learn how to use another programming language by using standard features of the Intellij platform IDE\@.
 
 \subsection{Intellij Platform SDK}\label{subsec:intellij-platform-sdk}
-The Intellij platform is a base IDE platform that lets plugin developers add functionality to the IDE in the form of \textit{extensions} and \textit{actions}.
-Extensions are predefined hooks into the IDE that the it supports building on top of, like file type syntax highlighting and adding a run configuration.
-All that is necessary is to implement or extend the class or interface that the SDK exposes for the given extension, and register the new class as the extension that has been overrode by the class.
-Most of the following features use extensions.
+The Intellij platform is a base IDE platform created and open-sourced by JetBrains.
+JetBrains builds an unchanged version of Intellij called Intellij IDEA and allows anyone to use and download it for free.
+JetBrains sells many different IDE products, like PyCharm, CLion, GoLand and much more.
+These are simply builds of the Intellij platform with a certain language specific, closed-source plugin(s) installed.
+Since JetBrains exposes an SDK allowing anyone to modify and/or add to large parts of the IDE platform, any plugins may be made and distributed for any of its IDEs.
+
+The SDK lets plugin developers add functionality to the IDE in the form of \textit{extensions} and \textit{actions}.
+A plugin consists of zero or more extensions as well as zero or more actions.
+
+Extensions are predefined hooks into the IDE that the it supports building on top of, like file type syntax highlighting and adding a run configuration page.
+All that is necessary is to implement or extend the class or interface that the SDK exposes for the given extension, and register the new class as the extension that has been overridden by the class.
+Most of the PLCC plugin's features are extensions.
+
 Actions are a way to trigger java code to run when a specified behavior happens, like clicking a UI element.
 An action is created by implementing the interface \textit{AnAction} which requires implementing the method \textit{actionPerformed} and registering this new class as an action of the desired type.
-The only action used is creating a new PLCC file.
+When the behavior specified by the type of action it is registered as happens, the method actionPerformed is called.
+The only action used in the PLCC plugin is to create a new PLCC file.
 
+
+\section{Related Work}\label{sec:related-work}
+\subsection{Current Batch Files}
+Currently, batch files are implemented to make the interpreter generation of the .plcc file as well as the many execution forms of the interpreter easier, they are very basic.
+The interpreter generation batch file called \textit{plccmk} simply
+\begin{itemize}
+    \item Checks for PLCC on the user's computer by using what the LIBPLCC environment variable points to.
+    If the LIBPLCC Env Var does not exist, it checks in a default directory.
+    It errors out if both of these fail to find a directory.
+    \item If no arguments have been given, it assumes the .plcc file is named \textit{grammar} with no file extension
+    \item Runs \textit{python $<$PLCC\_directory$>$/plcc.py $<$plcc\_file$>$} and errors out if that fails
+    \item runs \textit{cd Java; javac *.java} and errors out if that fails
+\end{itemize}
+The execution forms batch files simply run the Java class of the execution form if Java as well as the execution form's class exists in a Java/ directory.
+
+\subsection{Vim Highlighter Attempt}
+There was a student taking the class in 2018 who attempted to make a Vim syntax highlighter for the .plcc language.
+As one can imagine, since it was made by one student in the course of a couple weeks, it was not the smoothest or most correct syntax highlighter.
 
 \section{Implemented Features}\label{sec:implemented-features}
 
