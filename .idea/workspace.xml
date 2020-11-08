@@ -20,6 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3734a44a-a932-4869-bc2d-125ff41ee5cd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/example.tex" beforeDir="false" afterPath="$PROJECT_DIR$/src/example.tex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +45,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -64,8 +66,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Makefile.make pdf" />
       <item itemvalue="Makefile.make clean" />
+      <item itemvalue="Makefile.make pdf" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -90,39 +92,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="418" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603984815653">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="418" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1603984815653" />
-    <state x="693" y="271" width="524" height="508" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1603986468873">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="693" y="271" width="524" height="508" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1603986468873" />
-    <state x="738" y="268" width="424" height="519" key="FileChooserDialogImpl" timestamp="1603984790287">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="738" y="268" width="424" height="519" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1603984790287" />
-    <state width="1878" height="298" key="GridCell.Tab.0.bottom" timestamp="1604030239767">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1878" height="298" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1604030239767" />
-    <state width="1878" height="298" key="GridCell.Tab.0.center" timestamp="1604030239767">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1878" height="298" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1604030239767" />
-    <state width="1878" height="298" key="GridCell.Tab.0.left" timestamp="1604030239766">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1878" height="298" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1604030239766" />
-    <state width="1878" height="298" key="GridCell.Tab.0.right" timestamp="1604030239767">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1878" height="298" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1604030239767" />
-    <state x="514" y="248" width="882" height="553" key="new project wizard" timestamp="1603911766614">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="514" y="248" width="882" height="553" key="new project wizard/0.0.1920.1080@0.0.1920.1080" timestamp="1603911766614" />
   </component>
 </project>
