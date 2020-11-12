@@ -493,6 +493,16 @@ The Intellij SDK has the following abstract functionality that will be useful to
 
 
 \section{Background}\label{sec:background}
+\subsection{Why an IDE}\label{subsec:why-an-ide}
+Vim has a robust plugin ecosystem capable of things like autocompletion and syntax highlighting.
+IDEs like Intellij tend to have more features that text editors.
+In Intellij these include
+\begin{itemize}
+    \item syntax inspections
+    \item Advanced refactoring
+    \item Robust run configuration system
+\end{itemize}
+
 \subsection{Why Intellij}\label{subsec:why-intellij}
 Students at RIT most likely would have been introduced to the Intellij IDE platform in the two Computer Science introductory sequence classes.
 CS1 in Python can use the PyCharm IDE, and CS2 in Java can use the Intellij IDEA IDE.
@@ -515,7 +525,7 @@ They are very basic.
 The interpreter generation batch file called \textit{plccmk} simply checks for the PLCC language processor as well as Python on the user's computer, and runs the generator on the passed in file.
 The execution batch files simply run the Java class of the execution form, given that Java as well as the execution form's class exists.
 
-\subsection{Vim Highlighter Attempt}\label{subsec:vim-highlighter-attempt}
+\subsection{Vim Syntax Highlighter}\label{subsec:vim-highlighter-attempt}
 A student taking Programing Language Concepts in 2019 created a Vim syntax highlighter for .plcc and .ijava files which did not exist before.
 This helps the code writing process, but the professors have not let students know that it exists.
 
