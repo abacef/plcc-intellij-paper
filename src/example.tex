@@ -430,7 +430,7 @@ mdn4993@cs.rit.edu}}
 
 
 \begin{abstract}
-    High level Integrated Development Environments aide with programming in many ways, especially when documentation for the language is not good.
+    High level Integrated Development Environments aide with programming in many ways, especially when documentation for the language is not informative enough.
     This paper presents an Intellij platform plugin for an academic compiler compiler language.
     It includes syntax highlighting and error detection, one click compiler download, simple run configurations, and easy new file creation with templates.
 \end{abstract}
@@ -478,28 +478,25 @@ The Intellij platform plugin for the PLCC tool and language aims to make this pr
 \par Intellij is an IDE platform on which one can add functionality on top of via its SDK\@.
 The Intellij SDK has the following abstract functionality that will be useful to utilize:
 \begin{itemize}
-    \item A project setup wizard which is able to guide the user to make sure toolchains are installed and settings are selected.
+    \item \textbf{A project setup wizard} which is able to guide the user to make sure toolchains are installed and settings are selected.
     The PLCC language processor can be automatically installed, which could alleviate a big headache from past student's installation attempts
-    \item Syntax recognition and highlighting.
+    \item \textbf{Syntax recognition and highlighting}.
     This can help users see syntax errors as they are typing before compilation which could save development time.
-    If syntax is not recognised, it will have a red squiggle under it.
-    \item Syntax inspection.
+    If syntax is not recognized, it will have a red squiggle under it.
+    \item \textbf{Syntax inspection}.
     When a user puts the cursor within a certain syntax element, its usages and/or definition can be highlighted in the file (like a grammar rule's usage and its definition).
-    \item Autocompletion.
+    \item \textbf{Autocompletion}.
     When a user starts typing, suggestions for the assumed intent can show up under the cursor, and can be selected instead of continuing to type.
-    \item A graphical run configuration page.
+    \item \textbf{A graphical run configuration page}.
     This is able to make it easier to run a specified PLCC program instead of having to interact with the command line.
 \end{itemize}
 
 
 \section{Background}\label{sec:background}
-\subsection{Why an IDE}\label{subsec:why-an-ide}
-An editor like Vim along with using batch/bash files to run the program can only go so far in making things easier.
-They can offer syntax highlighting and run configurations, but they cannot help with autocompletion, code hints, and graphical amenities of wizards and run configurations.
-
 \subsection{Why Intellij}\label{subsec:why-intellij}
-Vim has syntax highlighting, but that is pretty much all it adds.
-Students at RIT most likely would have been introduced to the Intellij IDE platform in the two Computer Science introductory sequence classes, first in Python with the PyCharm IDE, then in Java with the Intellij IDEA IDE because most professors use them in those classes.
+Students at RIT most likely would have been introduced to the Intellij IDE platform in the two Computer Science introductory sequence classes.
+CS1 in Python can use the PyCharm IDE, and CS2 in Java can use the Intellij IDEA IDE.
+Most professors use them in those classes.
 Since these two classes are required for Programming Language Concepts, it would not be too difficult for a student to learn how to use another programming language by using standard features of the Intellij platform IDE\@.
 
 \subsection{Intellij Platform}\label{subsec:intellij-platform-sdk}
@@ -590,7 +587,7 @@ It will also contain the basic syntactic framework of one of those files, but wi
 This syntax is useful for a new PLCC developer, but may be a burden to familiar PLCC developers.
 
 If a user does not want the new .plcc or .ijava files to have framework code already in there, and they know the correct file extension, they can just create a generic file using \textit{New $\rightarrow$ File} and specifying the name of the file with the extension .plcc or .ijava.
-Every file ending with .plcc or .ijava has a unique icon to the left of the title so it can be easily recognised.
+Every file ending with .plcc or .ijava has a unique icon to the left of the title so it can be easily recognized.
 
 
 \begin{figure*}[!t]
@@ -610,12 +607,12 @@ Every file ending with .plcc or .ijava has a unique icon to the left of the titl
 Any file with the extension .plcc or .ijava in the project will have its syntax highlighted.
 
 \subsubsection{Syntax Recognising}\label{subsubsec:syntax-recognising}
-In order to highlight text in the file, a syntax recogniser needs to be created.
+In order to highlight text in the file, a syntax recognizer needs to be created.
 A common way to do this in Intellij is to define a .flex file to tokenize a file, and a .bnf file to parse the file based on the token definitions from the .flex file.
 JFlex is the tool that generates a Java token parser from a .flex file.
 For the parser, Intellij compiles the grammar rules specified in the .bnf file into Java code as well.
-The tokenizer and parser code are then linked up together to create the syntax recogniser.
-Intellij does not run the full syntax recogniser every time a file is changed, but uses some reentrant algorithm to keep new code highlighted efficiently.
+The tokenizer and parser code are then linked up together to create the syntax recognizer.
+Intellij does not run the full syntax recognizer every time a file is changed, but uses some reentrant algorithm to keep new code highlighted efficiently.
 If the code in the file does not parse, Intellij will put a red underline under the incorrect character(s) and tell the user the token type(s) that were expected in the place of the character.
 Valid syntax in an invalid file will still be highlighted.
 See figure~\ref{fig:syntax_invalid}.
