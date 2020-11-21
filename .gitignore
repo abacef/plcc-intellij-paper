@@ -1,3 +1,9 @@
 out/*
 auxil/*
 .idea/workspace.xml
+src/example.aux
+src/example.bbl
+src/example.blg
+src/example.log
+src/example.out
+src/example.pdf
