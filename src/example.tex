@@ -392,7 +392,7 @@
 \IEEEauthorblockA{Department of Computer Science\\Golisano College of Computing and Information Sciences\\
 Rochester Institute of Technology\\
 Rochester, NY 14586\\
-mdn4993@cs.rit.edu}}
+mdn4993@rit.edu}}
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -431,8 +431,8 @@ mdn4993@cs.rit.edu}}
 
 \begin{abstract}
     High level Integrated Development Environments aide with programming in many ways, especially when documentation for the language is not informative enough.
-    This paper presents an Intellij platform plugin for an academic compiler compiler language.
-    It includes syntax highlighting and error detection, one click compiler download, simple run configurations, and easy new file creation with templates.
+    This paper presents an Intellij platform plugin for an compiler compiler language used for teaching programming language concepts.
+    It includes syntax highlighting and error detection, one click compiler download, simple run configurations, and easy new file creation.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -463,23 +463,45 @@ mdn4993@cs.rit.edu}}
 
 \section{Introduction}\label{sec:introduction}
 PLCC\cite{plcc-paper} is a custom compiler compiler, or language processor tool used to teach the Programing Language Concepts course at Rochester Institute of Technology.
-It compiles a programming language definition to a interpreter made out of Java files.
+It compiles a programming language definition to a interpreter composed of Java files.
 The current development process for using the tool is
 \begin{itemize}
-    \item Download PLCC and make environment variable LIBPLCC point to it
-    \item Write a .plcc file to layout the grammar and tokens
-    \item Optionally add .ijava files to specify extra functionality when a grammar rule is used
+    \item Download the language processor
+    \begin{itemize}
+        \item This process is nuanced
+    \end{itemize}
+
+    \item Write a grammar file
+    \begin{itemize}
+        \item It is sometimes difficult to remember the syntax of the grammar file
+        \item Typos can be made referencing syntax elements
+        \item Compile errors only show up when manually compiled
+    \end{itemize}
+
+    \item Optionally add processing extension files
+    \begin{itemize}
+        \item The same issues exist as writing a grammar file
+    \end{itemize}
+
     \item Run a command to generate the language
-    \item Run one of the three Read Eval Print Loop commands
+    \begin{itemize}
+        \item The user may forget the command or how to use it
+    \end{itemize}
+
+    \item Run one of the three Read Evaluate Print Loop commands
+    \begin{itemize}
+        \item The user may forget which ones do what
+        \item The user may forget how to run them
+    \end{itemize}
+
 \end{itemize}
-The three REPL programs have different command names and it is difficult to remember which ones do what.
 Currently no formal effort has been done to make this development process easier.
 The Intellij platform plugin for the PLCC tool and language aims to make this process easier.
-\par Intellij is an IDE platform on which one can add functionality on top of via its SDK\@.
-The Intellij SDK has the following abstract functionality that will be useful to utilize:
+\par Intellij is an IDE platform on which one can program functionality on top of via its SDK\@.
+The Intellij SDK has the following useful functionality:
 \begin{itemize}
     \item \textbf{A project setup wizard} which is able to guide the user to make sure toolchains are installed and settings are selected.
-    The PLCC language processor can be automatically installed, which could alleviate a big headache from past student's installation attempts
+    The PLCC language processor can be automatically installed, which could alleviate a big headache from future student's installing it.
     \item \textbf{Syntax recognition and highlighting}.
     This can help users see syntax errors as they are typing before compilation which could save development time.
     If syntax is not recognized, it will have a red squiggle under it.
@@ -488,17 +510,16 @@ The Intellij SDK has the following abstract functionality that will be useful to
     \item \textbf{Autocompletion}.
     When a user starts typing, suggestions for the assumed intent can show up under the cursor, and can be selected instead of continuing to type.
     \item \textbf{A graphical run configuration page}.
-    This is able to make it easier to run a specified PLCC program instead of having to interact with the command line.
+    This is able to make it easier to run a specified PLCC installation instead of having to interact with the command line.
 \end{itemize}
 
 
 \section{Background}\label{sec:background}
 \subsection{Why an IDE}\label{subsec:why-an-ide}
-Vim has a robust plugin ecosystem capable of things like autocompletion and syntax highlighting.
-IDEs like Intellij tend to have more features that text editors.
-In Intellij these include
+Text editors like Vim have robust plugin ecosystems capable of things like autocompletion and syntax highlighting.
+IDEs like Intellij usually have this as well but also tend to have more features like
 \begin{itemize}
-    \item syntax inspections
+    \item Syntax inspections
     \item Advanced refactoring
     \item Robust run configuration system
 \end{itemize}
@@ -514,19 +535,19 @@ The Intellij platform is a base IDE platform created and open-sourced by JetBrai
 JetBrains builds an unchanged version of Intellij called Intellij IDEA and allows anyone to use and download it for free.
 JetBrains sells many different IDE products, like PyCharm, CLion, GoLand and much more.
 These are simply builds of the Intellij platform with a certain language specific, closed-source plugin(s) installed.
-Since JetBrains exposes an SDK allowing anyone to modify and/or add to large parts of the IDE platform, any plugins may be made and distributed for any of its IDEs.
+Since JetBrains exposes an SDK allowing anyone to modify and/or add to large parts of the IDE platform, plugins can be made and distributed for any of its IDEs.
 
 
 \section{Related Work}\label{sec:related-work}
 \subsection{Current Batch Files}\label{subsec:current-batch-files}
-Currently, batch files are implemented to make the interpreter generation of the .plcc file as well as the many execution forms of the interpreter easier.
+Currently, batch files are implemented to make the interpreter generation of the grammar file as well as the many execution forms of the interpreter easier.
 They are very basic.
 
-The interpreter generation batch file called \textit{plccmk} simply checks for the PLCC language processor as well as Python on the user's computer, and runs the generator on the passed in file.
+The interpreter generation batch file called \textit{plccmk} simply checks for the language processor as well as Python on the user's computer, and runs the generator on the passed in file.
 The execution batch files simply run the Java class of the execution form, given that Java as well as the execution form's class exists.
 
 \subsection{Vim Syntax Highlighter}\label{subsec:vim-highlighter-attempt}
-A student taking Programing Language Concepts in 2019 created a Vim syntax highlighter for .plcc and .ijava files which did not exist before.
+A student taking Programing Language Concepts in 2019 created a Vim syntax highlighter for grammar and grammar extension files which did not exist before.
 This helps the code writing process, but the professors have not let students know that it exists.
 
 
@@ -540,8 +561,8 @@ Most of the PLCC plugin's features are extensions.
 
 Actions are a way to trigger java code to run when a specified behavior happens, like clicking a UI element.
 An action is created by implementing the interface \textit{AnAction} which requires implementing the method \textit{actionPerformed} and registering this new class as an action of the desired type.
-When the behavior specified by the type of action it is registered as happens, the method actionPerformed is called.
-The only action used in the PLCC plugin is to create new .plcc and .ijava files.
+When the behavior specified by the type of action it is registered as happens, the method \textit{actionPerformed} is called.
+The only action used in the PLCC plugin is to create new grammar and grammar extension files.
 
 
 \section{Implemented Features}\label{sec:implemented-features}
@@ -553,63 +574,62 @@ The only action used in the PLCC plugin is to create new .plcc and .ijava files.
 \end{figure*}
 
 \subsection{Project Creation}\label{subsec:project-creation}
-The idiom of creating a new project in Intellij is to work out the details before development should begin.
-In this case, our goal is to run an interpreter generated from a .plcc file with .ijava extension files.
-Before a .plcc file is compiled and the interpreter is run, both a PLCC compiler and a Java distribution must be installed on the user's computer.
+The idiom of creating a new project in Intellij is to work out aspects of developemt before development begins.
+In this case, our goal is to run an interpreter generated from a grammar file and/or grammar extension files.
+Before a grammar file is compiled and the interpreter is run, both a language processor and a Java distribution must be installed on the user's computer.
 This is because PLCC outputs the interpreter in the form of Java classes.
 
 When a user clicks \textit{File $\rightarrow$ New Project}, they are presented with different project types to choose from on the left side of the new pop-up displayed as seen in figure~\ref{fig:proj_config}.
 For the project type that is selected, on the right side there will be some sort of custom GUI that the user can interact with.
-The right side of a PLCC project contains two labeled combo boxes, one for the PLCC program location and one for the Java JDK.
+The right side of a PLCC project contains two labeled combo boxes, one for the language processor location and one for the Java JDK.
 
 \subsubsection{PLCC Program Location Selection}\label{subsubsec:plcc-program-location}
-The PLCC dropdown has two default options, plus zero or more other options based on how many PLCC programs are downloaded on a user's computer.
+The PLCC dropdown has two default options, along with zero or more other options based on how many PLCC language processors are downloaded on a user's computer.
 The first default option is to download PLCC\@.
-When selected, The PLCC program is downloaded and put in the user's home directory, and an entry for that file is added to the drop-down.
-The second default option is to find a PLCC installation on the user's computer.
+When selected, The language processor is downloaded and put in the user's home directory, and an entry for that PLCC installation is added to the drop-down.
+The second default option is to find a language processor installation on the user's computer.
 When clicked, a file picker will open up, so the user is able to pick where the installation is located.
 If the selected path has a valid installation, it is added to the drop-down list.
 The other options possible are autodetected installations.
-Before the drop-down list appears, the \textit{\$HOME/.plcc} directory will be searched for valid installations as well as whatever directory the environment variable LIBPLCC holds.
+Before the drop-down list appears, the \textit{\$HOME/.plcc} directory will be searched for valid installations as well as if the value in LIBPLCC holds a valid installation.
 
 \subsubsection{JDK Selection}\label{subsubsec:jdk-installation}
 The JDK drop-down box will be populated with all the confirmed installations that Intellij has cached throughout the usage of the IDE. Any of these may be selected.
-The PLCC output is compatible with Java 7 or higher.
 
 \subsubsection{Generated Project File Structure}\label{subsubsec:generated-project-file-structure}
 After \textit{next} is selected and the user selects the directory and name of the project they want to create, they are presented with the editor and project file list.
-There will be a directory created under the project directory named \textit{plcc} where the user is expected to store the .plcc file(s) they create.
+There will be a directory created under the project directory named \textit{plcc} where the user is expected to store the grammar file(s) they create.
 within that directory, there is a \textit{Java} directory that is marked as sources root.
-This is the directory that PLCC will put the generated Java files.
+This is the directory that language processor will put the generated Java files.
 Marking a directory as sources root means that the directory is where Intellij expects to find Java files.
 
 \begin{figure*}[!t]
     \centering
     \includegraphics[width=4in]{new_PLCC_file_shortcut.png}
-    \caption{Create a new .plcc file. The file will contain the basic syntax structure.}
+    \caption{Create a new grammar file. The file will contain the basic syntax structure.}
     \label{fig:new_file_shortcut}
 \end{figure*}
 \subsection{New File Shortcuts}\label{subsec:new-plcc-file-shortcut}
-When a user is ready to develop a .plcc or .ijava file, the creation is easy.
+When a user is ready to develop a grammar or a grammar extension file, the creation is easy.
 They simply right click on the directory and click \textit{New} and both PLCC and IJava entries show up to be selected.
 The new file created will have the file extension according to which option they selected.
-It will also contain the basic syntactic framework of one of those files, but with comments where the code needs to go.
+It will also contain the basic syntactic scaffolding of one of those files, but with comments where the code needs to go.
 This syntax is useful for a new PLCC developer, but may be a burden to familiar PLCC developers.
 
-If a user does not want the new .plcc or .ijava files to have framework code already in there, and they know the correct file extension, they can just create a generic file using \textit{New $\rightarrow$ File} and specifying the name of the file with the extension .plcc or .ijava.
+If a user does not want the new grammar or grammar extension files to have scaffold code already in there, and they know the correct file extension, they can just create a generic file using \textit{New $\rightarrow$ File} and specifying the name of the file with the extension.
 Every file ending with .plcc or .ijava has a unique icon to the left of the title so it can be easily recognized.
 
 
 \begin{figure*}[!t]
     \centering
     \includegraphics[width=4in]{syntax.png}
-    \caption{Syntax highlighting on a valid .plcc file}
+    \caption{Syntax highlighting on a valid grammar file}
     \label{fig:syntax}
 \end{figure*}
 \begin{figure*}[!t]
     \centering
     \includegraphics[width=1.5in]{syntax_invalid.png}
-    \caption{Syntax highlighting on an invalid  .plcc file. Unexpected characters are underlined in red}
+    \caption{Syntax highlighting on an invalid grammar file. Unexpected characters are underlined in red}
     \label{fig:syntax_invalid}
 \end{figure*}
 
@@ -633,9 +653,9 @@ Token types can be assigned a certain color, or a color class that Intellij prov
 If other plugins use these classes for similar token types in their language, and a user has seen syntax in many languages in Intellij, it is easier for them to make out what a specific syntax element is and means.
 
 \subsection{Line Commenting}\label{subsec:line-commenting}
-Intellij encourages the line comment keyboard shortcut to be \textit{Ctrl + /}.
+Intellij encourages the line comment keyboard shortcut to be \textit{Ctrl /}.
 The PLCC language has only a line comment character, which is \textit{\#}.
-If the cursor is either on a line or if one or more lines are highlighted, when \textit{Ctrl + /} is pressed, all those lines will have a \textit{\#} character prepended to them.
+If the cursor is either on a line or if one or more lines are highlighted, when \textit{Ctrl /} is pressed, all those lines will have a \textit{\#} character prepended to them.
 
 
 \subsection{PLCC Run Configuration}\label{subsec:plcc-run-configuration}
@@ -644,8 +664,8 @@ When selected, a GUI is displayed on the right side of the Run Configuration pop
 The only input necessary from the user is to pick the .plcc file from the text box shown.
 If only one .plcc file exists in the plcc directory, it will be autopopulated.
 
-When the run button is clicked with a PLCC run configuration, the Intellij \textit{Run} tab will open and run the PLCC language processor with the .plcc file.
-If the .plcc file correctly executed with the PLCC program, the Java files will be generated into a folder named \textit{Java} in the same directory as the .plcc file ran.
+When the run button is clicked with a PLCC run configuration, the Intellij \textit{Run} tab will open and run the PLCC language processor with the grammar file.
+If the grammar file correctly executed with the language processor, the Java files will be generated into a folder named \textit{Java} in the same directory as the grammar file ran.
 Since this \textit{Java} directory was marked as a sources root during project creation, Intellij will recognize these files as Java classes.
 
 If a user wants to see the AST of feeding a snipet of their own language into the interpreter, they would create a simple Java run configuration and run the generated Parse class with possible a file as an argument.
@@ -657,16 +677,16 @@ If a user wants to see an AST representation of their language syntax while stil
 A PLCC plugin has been implemented with the following features:
 \begin{itemize}
     \item Project Setup Wizard to select PLCC location and Java location
-    \item New File creation shortcuts for .plcc and .ijava files with basic syntax framework
-    \item Syntax recognition and highlighting for .plcc files
-    \item Syntax recognition for .ijava files
+    \item New File creation shortcuts for grammar and grammar extension files with basic syntax framework
+    \item Syntax recognition and highlighting for grammar files
+    \item Syntax recognition for grammar extension files
     \item Keyboard shortcut line commenting
     \item Run Configuration template for a PLCC
 \end{itemize}
 It is available on the JetBrains Plugin Marketplace under the name "PLCC".
 The source code is at \href{https://github.com/ourPLCC/plcc-intellij}{github.com/ourPLCC/plcc-intellij}.
 
-We hypothesize that learning how to use the IDE plugin along with the bugs the user may encounter, will be slightly overpowered by the ease of use the plugin provides over the old development process.
+We believe that learning how to use the IDE plugin along with the bugs the user may encounter will be slightly overpowered by the ease of use the plugin provides over the old development process.
 More user research, plugin features as well as plugin development testing could make this an even easier choice.
 
 \subsection{More Proposed Features}\label{subsec:more-proposed-features}
@@ -674,9 +694,9 @@ More user research, plugin features as well as plugin development testing could 
 Some future features that could make the development experience better are:
 \begin{itemize}
     \item Implementation of Syntax highlighting for Java code within a \%\%\% code block
-    \item Many context hints need to be implemented, for example reference and usage highlighting, graying out unused grammar rules, autocompletion of grammar rules and token type definitions, goto .ijava file declaration for grammar rules and include statements, and more.
-    \item A run configuration should consist of a user selecting a .plcc file as well as selecting Parse Scan or Rep so that generation, compilation and running happens all at once.
-    PLCC will not need to be run if the .plcc file was not changed.
+    \item Many context hints need to be implemented, for example reference and usage highlighting, graying out unused grammar rules, autocompletion of grammar rules and token type definitions, goto grammar extension file declaration for grammar rules and include statements, and more.
+    \item A run configuration should consist of a user selecting a grammar file as well as selecting Parse Scan or Rep so that generation, compilation and running happens all at once.
+    PLCC will not need to be run if the grammar file was not changed.
 \end{itemize}
 
 %------------------------------------------------------------------------------------
