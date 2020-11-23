@@ -463,7 +463,7 @@ mdn4993@rit.edu}}
 
 \section{Introduction}\label{sec:introduction}
 PLCC\cite{plcc-paper} is a custom compiler compiler, or language processor tool used to teach the Programing Language Concepts course at Rochester Institute of Technology.
-It compiles a programming language definition to a interpreter composed of Java files.
+It compiles a programming language definition to an interpreter composed of Java files.
 The current development process for using the tool is
 \begin{itemize}
     \item Download the language processor
@@ -493,9 +493,8 @@ The current development process for using the tool is
         \item The user may forget which ones do what
         \item The user may forget how to run them
     \end{itemize}
-
 \end{itemize}
-Currently no formal effort has been done to make this development process easier.
+Currently, no formal effort has been done to make this development process easier.
 The Intellij platform plugin for the PLCC tool and language aims to make this process easier.
 \par Intellij is an IDE platform on which one can program functionality on top of via its SDK\@.
 The Intellij SDK has the following useful functionality:
@@ -515,6 +514,27 @@ The Intellij SDK has the following useful functionality:
 
 
 \section{Background}\label{sec:background}
+\subsection{What is PLCC}\label{subsec:what-is-plcc}
+PLCC is a compiler.
+The implementation language of the compiler is Python.
+The source language is PLCC, a specification of tokens, syntax and semantics of a language.
+A PLCC file may have language extension files that define more of the semantics of the language.
+The target language is Java, more specifically an interpreter written in Java for the language in the grammar file.
+\subsection{How PLCC works}\label{subsec:how-plcc-works}
+The PLCC file, and the language extension files are given to the PLCC\@.
+It extracts the tokens specified and their regular expressions and puts them in a new file called \textit{Token.java}.
+A file called \textit{Scan.java} is generated which takes in a string of text (a program) and outputs a next token function which gives the next token found in the string.
+Each grammar rule is put into its own Java file with its dependant token types and/or grammar rules as fields of the class.
+It also has one method named \textit{parse} which takes in the scanner and returns the result of calling parse on all of its children with the given token stream.
+Tokens always parse to themselves, so they will be the base case in the recursion.
+The grammar is checked for LL(1) compliance before anything is started.
+A file called \textit{Rep} is generated which enters a REPL for the language.
+The output of feeding a program into the REPL is the \textit{toString} representation of the program, which consists of toString being called on each grammar element in recursive decent fashion, just like how a mathmatical expression can be parsed into a tree.
+The REPL takes a tree and flattens it to one line.
+An EOF token is emitted if there are no tokens left.
+
+
+
 \subsection{Why an IDE}\label{subsec:why-an-ide}
 Text editors like Vim have robust plugin ecosystems capable of things like autocompletion and syntax highlighting.
 IDEs like Intellij usually have this as well but also tend to have more features like
