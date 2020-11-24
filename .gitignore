@@ -1,9 +1,9 @@
 out/*
 auxil/*
 .idea/workspace.xml
-src/example.aux
-src/example.bbl
-src/example.blg
-src/example.log
-src/example.out
-src/example.pdf
+src/plcc_paper.bbl
+src/plcc_paper.aux
+src/plcc_paper.blg
+src/plcc_paper.log
+src/plcc_paper.out
+src/plcc_paper.pdf

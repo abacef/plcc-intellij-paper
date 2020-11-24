@@ -8,7 +8,7 @@
 LATEX=latex		# read the source
 PDFLATEX=pdflatex
 BIBTEX=bibtex
-FILE=example
+FILE=plcc_paper
 
 pdf:
 	$(PDFLATEX) $(FILE)
