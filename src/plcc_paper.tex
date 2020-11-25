@@ -521,16 +521,17 @@ The source language is PLCC, a specification of tokens, syntax and semantics of 
 A PLCC file may have language extension files that define more of the semantics of the language.
 The target language is Java, more specifically an interpreter written in Java for the language in the grammar file.
 \subsection{How PLCC works}\label{subsec:how-plcc-works}
-The PLCC file, and the language extension files are given to the PLCC\@.
+The grammar file, and the language extension files are given to the PLCC\@.
 It extracts the tokens specified and their regular expressions and puts them in a new file called \textit{Token.java}.
-A file called \textit{Scan.java} is generated which takes in a string of text (a program) and outputs a next token function which gives the next token found in the string.
+A file called \textit{Scan.java} is generated which takes in a string of text (a program) and outputs a next token function which gives the next token found in the program string.
 Each grammar rule is put into its own Java file with its dependant token types and/or grammar rules as fields of the class.
-It also has one method named \textit{parse} which takes in the scanner and returns the result of calling parse on all of its children with the given token stream.
-Tokens always parse to themselves, so they will be the base case in the recursion.
+Each also has one method named \textit{parse} which takes in the scanner and returns the result of calling parse on all of its children with the given token stream.
+Tokens always parse to themselves, so they will be the base case in the recursive parse call.
 The grammar is checked for LL(1) compliance before anything is started.
 A file called \textit{Rep} is generated which enters a REPL for the language.
-The output of feeding a program into the REPL is the \textit{toString} representation of the program, which consists of toString being called on each grammar element in recursive decent fashion, just like how a mathmatical expression can be parsed into a tree.
-The REPL takes a tree and flattens it to one line.
+The output of feeding a program into the REPL is the string representation of the program, which consists of toString being called on each grammar element in recursive decent fashion.
+ToString can be overridden for each grammar element which can be made to have a useful output
+The REPL takes a syntax tree and flattens it to one line.
 An EOF token is emitted if there are no tokens left.
 
 
