@@ -431,7 +431,7 @@ mdn4993@rit.edu}}
 
 \begin{abstract}
     High level Integrated Development Environments aide with programming in many ways, especially when documentation for the language is not informative enough.
-    This paper presents an Intellij platform plugin for an compiler compiler language used for teaching programming language concepts.
+    This paper presents an Intellij platform plugin for a compiler compiler language used for teaching programming language concepts.
     It includes syntax highlighting and error detection, one click compiler download, simple run configurations, and easy new file creation.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
@@ -488,7 +488,7 @@ The current development process for using the tool is
         \item The user may forget the command or how to use it
     \end{itemize}
 
-    \item Run one of the three Read Evaluate Print Loop commands
+    \item Run one of the three interpreter execution commands
     \begin{itemize}
         \item The user may forget which ones do what
         \item The user may forget how to run them
@@ -523,12 +523,14 @@ The target language is Java, more specifically an interpreter written in Java fo
 \subsection{How PLCC works}\label{subsec:how-plcc-works}
 The grammar file, and the language extension files are given to the PLCC\@.
 It extracts the tokens specified and their regular expressions and puts them in a new file called \textit{Token.java}.
-A file called \textit{Scan.java} is generated which takes in a string of text (a program) and outputs a next token function which gives the next token found in the program string.
+
+A file called \textit{Scan.java} is generated which takes in a string of text (a program) and stores a next token function which gives the next token found in the program string.
 Each grammar rule is put into its own Java file with its dependant token types and/or grammar rules as fields of the class.
 Each also has one method named \textit{parse} which takes in the scanner and returns the result of calling parse on all of its children with the given token stream.
 Tokens always parse to themselves, so they will be the base case in the recursive parse call.
 The grammar is checked for LL(1) compliance before anything is started.
-A file called \textit{Rep} is generated which enters a REPL for the language.
+
+A file called \textit{Rep} is generated which enters a read eval print loop (REPL) for the language.
 The output of feeding a program into the REPL is the string representation of the program, which consists of toString being called on each grammar element in recursive decent fashion.
 ToString can be overridden for each grammar element which can be made to have a useful output
 The REPL takes a syntax tree and flattens it to one line.
@@ -560,16 +562,16 @@ Since JetBrains exposes an SDK allowing anyone to modify and/or add to large par
 
 
 \section{Related Work}\label{sec:related-work}
-\subsection{Current Batch Files}\label{subsec:current-batch-files}
-Currently, batch files are implemented to make the interpreter generation of the grammar file as well as the many execution forms of the interpreter easier.
+\subsection{Current Scripts}\label{subsec:current-scripts}
+Currently, script files are implemented to make the interpreter generation of the grammar file as well as the many execution forms of the interpreter easier.
 They are very basic.
 
-The interpreter generation batch file called \textit{plccmk} simply checks for the language processor as well as Python on the user's computer, and runs the generator on the passed in file.
-The execution batch files simply run the Java class of the execution form, given that Java as well as the execution form's class exists.
+The interpreter generation script file called \textit{plccmk} simply checks for the language processor as well as Python on the user's computer, and runs the generator on the passed in file.
+The execution script files simply run the Java class of the execution form, given that Java as well as the execution form's class exists.
 
 \subsection{Vim Syntax Highlighter}\label{subsec:vim-highlighter-attempt}
 A student taking Programing Language Concepts in 2019 created a Vim syntax highlighter for grammar and grammar extension files which did not exist before.
-This helps the code writing process, but the professors have not let students know that it exists.
+This helps the code writing process, but students do not use it, and there is a lack of knowledge that it exists.
 
 
 \section{Intellij Platform SDK}\label{sec:intellij-platform-sdk}
@@ -580,7 +582,7 @@ Extensions are predefined hooks into the IDE that it supports building on top of
 All that is necessary is to implement or extend the class or interface that the SDK exposes for the given extension, and register the new class as the extension that has been overridden by the class.
 Most of the PLCC plugin's features are extensions.
 
-Actions are a way to trigger java code to run when a specified behavior happens, like clicking a UI element.
+Actions are a way to trigger Java code to run when a specified behavior happens, like clicking a UI element.
 An action is created by implementing the interface \textit{AnAction} which requires implementing the method \textit{actionPerformed} and registering this new class as an action of the desired type.
 When the behavior specified by the type of action it is registered as happens, the method \textit{actionPerformed} is called.
 The only action used in the PLCC plugin is to create new grammar and grammar extension files.
@@ -607,7 +609,7 @@ The right side of a PLCC project contains two labeled combo boxes, one for the l
 \subsubsection{PLCC Program Location Selection}\label{subsubsec:plcc-program-location}
 The PLCC dropdown has two default options, along with zero or more other options based on how many PLCC language processors are downloaded on a user's computer.
 The first default option is to download PLCC\@.
-When selected, The language processor is downloaded and put in the user's home directory, and an entry for that PLCC installation is added to the drop-down.
+When selected, The language processor is downloaded from a GitHub release, put in the user's home directory, and an entry for that PLCC installation is added to the drop-down.
 The second default option is to find a language processor installation on the user's computer.
 When clicked, a file picker will open up, so the user is able to pick where the installation is located.
 If the selected path has a valid installation, it is added to the drop-down list.
@@ -687,12 +689,12 @@ The only input necessary from the user is to pick the .plcc file from the text b
 If only one .plcc file exists in the plcc directory, it will be autopopulated.
 
 When the run button is clicked with a PLCC run configuration, the Intellij \textit{Run} tab will open and run the PLCC language processor with the grammar file.
-If the grammar file correctly executed with the language processor, the Java files will be generated into a folder named \textit{Java} in the same directory as the grammar file ran.
+If the grammar file correctly executed with the language processor, the Java files will be generated into the folder named \textit{Java} in the same directory as the grammar file ran.
 Since this \textit{Java} directory was marked as a sources root during project creation, Intellij will recognize these files as Java classes.
 
-If a user wants to see the AST of feeding a snipet of their own language into the interpreter, they would create a simple Java run configuration and run the generated Parse class with possible a file as an argument.
+If a user wants to see the abstract syntax tree (AST) of feeding a snipet of their own language into the interpreter, they would create a simple Java run configuration and run the generated Parse class with possible a file as an argument.
 This process is the same for Rep and Scan (Rep starts a REPL, and scan shows the tokens tokenized).
-If a user wants to see an AST representation of their language syntax while still running the interpreter, they would add an argument \textit{-t} to Rep.
+If a user wants to see an AST representation of their language syntax while still running the interpreter, they would add an argument \textit{-t} to the Rep run configuration.
 
 
 \section{Conclusion}\label{sec:conclusion}
@@ -703,7 +705,7 @@ A PLCC plugin has been implemented with the following features:
     \item Syntax recognition and highlighting for grammar files
     \item Syntax recognition for grammar extension files
     \item Keyboard shortcut line commenting
-    \item Run Configuration template for a PLCC
+    \item Run Configuration template for a PLCC file
 \end{itemize}
 It is available on the JetBrains Plugin Marketplace under the name "PLCC".
 The source code is at \href{https://github.com/ourPLCC/plcc-intellij}{github.com/ourPLCC/plcc-intellij}.
