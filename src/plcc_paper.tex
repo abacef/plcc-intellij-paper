@@ -531,7 +531,7 @@ Tokens always parse to themselves, so they will be the base case in the recursiv
 The grammar is checked for LL(1) compliance before anything is started.
 
 A file called \textit{Rep} is generated which enters a read eval print loop (REPL) for the language.
-The output of feeding a program into the REPL is the string representation of the program, which consists of toString being called on each grammar element in recursive decent fashion.
+The output of feeding a program into the REPL is the string representation of the program, which consists of toString being called on the first grammar rule.
 ToString can be overridden for each grammar element which can be made to have a useful output
 The REPL takes a syntax tree and flattens it to one line.
 An EOF token is emitted if there are no tokens left.
